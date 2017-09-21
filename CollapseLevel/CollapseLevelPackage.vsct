@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  
+  <Extern href="stdidcmd.h"/>
+  <Extern href="vsshlids.h"/>
+
+  <Commands package="guidCollapseLevelPackage">
+    <Menus>
+      <Menu guid="guidGroup" id="ExtensionMenu" priority="0x700" type="Menu">
+        <Parent guid="guidSHLMainMenu" id="IDG_VS_VIEW_TOOLBARS" /> <!-- Maps to View > Collapse Level-->
+        <Strings>
+          <ButtonText>Collapse Level</ButtonText>
+          <CommandName>Collapse Level</CommandName>
+        </Strings>
+      </Menu>
+    </Menus>
+
+    <Groups>
+      <Group guid="guidGroup" id="CommandGroup" priority="0x0600">
+        <Parent guid="guidGroup" id="ExtensionMenu"/>
+      </Group>
+    </Groups>
+
+    <Buttons>
+      <Button guid="guidGroup" id="CollapseLevelOneId" priority="0x0101" type="Button">
+        <Parent guid="guidGroup" id="CommandGroup" />
+        <Strings>
+          <ButtonText>Level 1 collapse</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidGroup" id="CollapseLevelTwoId" priority="0x0102" type="Button">
+        <Parent guid="guidGroup" id="CommandGroup" />
+        <Strings>
+          <ButtonText>Level 2 collapse</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidGroup" id="CollapseLevelThreeId" priority="0x0103" type="Button">
+        <Parent guid="guidGroup" id="CommandGroup" />
+        <Strings>
+          <ButtonText>Level 3 collapse</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidGroup" id="CollapseLevelFourId" priority="0x0104" type="Button">
+        <Parent guid="guidGroup" id="CommandGroup" />
+        <Strings>
+          <ButtonText>Level 4 collapse</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidGroup" id="CollapseLevelFiveId" priority="0x0105" type="Button">
+        <Parent guid="guidGroup" id="CommandGroup" />
+        <Strings>
+          <ButtonText>Level 5 collapse</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidGroup" id="CollapseLevelSixId" priority="0x0106" type="Button">
+        <Parent guid="guidGroup" id="CommandGroup" />
+        <Strings>
+          <ButtonText>Level 6 collapse</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidGroup" id="CollapseLevelSevenId" priority="0x0107" type="Button">
+        <Parent guid="guidGroup" id="CommandGroup" />
+        <Strings>
+          <ButtonText>Level 7 collapse</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidGroup" id="CollapseLevelEightId" priority="0x0108" type="Button">
+        <Parent guid="guidGroup" id="CommandGroup" />
+        <Strings>
+          <ButtonText>Level 8 collapse</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidGroup" id="CollapseLevelCustom" priority="0x0109" type="Button">
+        <Parent guid="guidGroup" id="CommandGroup" />
+        <Strings>
+          <ButtonText>Custom</ButtonText>
+        </Strings>
+      </Button>
+    </Buttons>
+    
+  </Commands>
+
+  <KeyBindings>
+    <KeyBinding guid="guidGroup" id="CollapseLevelOneId"
+        key1="1" mod1="ALT" editor="guidVSStd97" />
+
+    <KeyBinding guid="guidGroup" id="CollapseLevelTwoId"
+        key1="2" mod1="ALT" editor="guidVSStd97" />
+
+    <KeyBinding guid="guidGroup" id="CollapseLevelThreeId"
+        key1="3" mod1="ALT" editor="guidVSStd97" />
+
+    <KeyBinding guid="guidGroup" id="CollapseLevelFourId"
+        key1="4" mod1="ALT" editor="guidVSStd97" />
+
+    <KeyBinding guid="guidGroup" id="CollapseLevelFiveId"
+        key1="5" mod1="ALT" editor="guidVSStd97" />
+
+    <KeyBinding guid="guidGroup" id="CollapseLevelSixId"
+        key1="6" mod1="ALT" editor="guidVSStd97" />
+
+    <KeyBinding guid="guidGroup" id="CollapseLevelSevenId"
+        key1="7" mod1="ALT" editor="guidVSStd97" />
+
+    <KeyBinding guid="guidGroup" id="CollapseLevelEightId"
+        key1="8" mod1="ALT" editor="guidVSStd97" />
+
+    <KeyBinding guid="guidGroup" id="CollapseLevelCustom"
+        key1="9" mod1="ALT" editor="guidVSStd97" />
+  </KeyBindings>
+
+  <Symbols>
+    <!-- This is the package guid. -->
+    <GuidSymbol name="guidCollapseLevelPackage" value="{eb99011d-bdb0-42ab-90f9-de4424858b1c}" />
+
+    <!-- This is the guid used to group the menu commands together -->
+    <GuidSymbol name="guidGroup" value="{40b66aa9-8017-4fb7-a3b5-765d2f97b2b1}">
+      <IDSymbol name="ExtensionMenu" value="0x1025"/>
+      <IDSymbol name="CommandGroup" value="0x1021" />
+      <IDSymbol name="CollapseLevelOneId" value="0x0101" />
+      <IDSymbol name="CollapseLevelTwoId" value="0x0102" />
+      <IDSymbol name="CollapseLevelThreeId" value="0x0103" />
+      <IDSymbol name="CollapseLevelFourId" value="0x0104" />
+      <IDSymbol name="CollapseLevelFiveId" value="0x0105" />
+      <IDSymbol name="CollapseLevelSixId" value="0x0106" />
+      <IDSymbol name="CollapseLevelSevenId" value="0x0107" />
+      <IDSymbol name="CollapseLevelEightId" value="0x0108" />
+      <IDSymbol name="CollapseLevelCustom" value="0x0109" />
+    </GuidSymbol>
+  </Symbols>
+
+</CommandTable>
