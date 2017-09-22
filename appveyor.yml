@@ -3,6 +3,9 @@ environment:
 
 image: Visual Studio 2017
 
+configuration:
+  - AppVeyor
+
 before_build:
 - nuget restore
 
