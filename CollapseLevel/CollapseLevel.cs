@@ -113,7 +113,7 @@ namespace CollapseLevel
         }
 
         /// <summary>
-        /// Recursively walk through all the regions, calculate their levels and collapse all regions where n = level +1.
+        /// Walk through all the regions, calculate their levels and collapse all regions where n = level +1.
         /// </summary>
         private void Collapse(int level)
         {
