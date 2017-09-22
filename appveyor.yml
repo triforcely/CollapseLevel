@@ -1,0 +1,11 @@
+environment:
+  IsAppveyorBuild: true
+
+image: Visual Studio 2017
+
+before_build:
+- nuget restore
+
+build:
+  project: CollapseLevel.sln
+  verbosity: minimal
