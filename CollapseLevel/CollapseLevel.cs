@@ -117,8 +117,6 @@ namespace CollapseLevel
         /// </summary>
         private void Collapse(int level)
         {
-            level++; // Because we want to collapse above this level
-
             var componentModel = this.ServiceProvider.GetService(typeof(SComponentModel)) as IComponentModel;
 
             foreach (ITextView tv in TextViewRegistry.GetExistingViews()) // Collapse is performed on all open documents in current state of extension.
