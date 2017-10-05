@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.Shell;
+﻿using EnvDTE;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.TextManager.Interop;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
@@ -19,7 +21,10 @@ namespace CollapseLevel
 
         protected override void Initialize()
         {
-            CollapseLevel.Initialize(this);
+            DTE dte = (DTE)base.GetService(typeof(DTE));
+            var textManager = (IVsTextManager)base.GetService(typeof(SVsTextManager));
+
+            CollapseLevel.Initialize(this, textManager);
             base.Initialize();
         }
     }

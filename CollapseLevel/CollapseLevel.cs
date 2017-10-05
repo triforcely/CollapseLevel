@@ -3,8 +3,8 @@ using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text;
-using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Text.Outlining;
+using Microsoft.VisualStudio.TextManager.Interop;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
@@ -44,14 +44,19 @@ namespace CollapseLevel
         /// </summary>
         private readonly Package package;
 
-        // Will keep value of last custom level so input prompt can be populated with last value.
+        /// <summary>
+        /// Text manager to get information about active views.
+        /// </summary>
+        private readonly IVsTextManager textManager;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CollapseLevel"/> class.
         /// Adds our command handlers for menu (commands must exist in the command table file)
         /// </summary>
-        private CollapseLevel(Package package)
+        private CollapseLevel(Package package, IVsTextManager textManager)
         {
             this.package = package ?? throw new ArgumentNullException("package");
+            this.textManager = textManager;
 
             OleMenuCommandService commandService = this.ServiceProvider.GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
             if (commandService != null)
@@ -107,9 +112,9 @@ namespace CollapseLevel
         /// Initializes the singleton instance of the command.
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
-        public static void Initialize(Package package)
+        public static void Initialize(Package package, IVsTextManager textManager)
         {
-            Instance = new CollapseLevel(package);
+            Instance = new CollapseLevel(package, textManager);
         }
 
         /// <summary>
@@ -117,65 +122,67 @@ namespace CollapseLevel
         /// </summary>
         private void Collapse(int level)
         {
-            var componentModel = this.ServiceProvider.GetService(typeof(SComponentModel)) as IComponentModel;
+            var tv = TextViewRegistry.GetActiveTextView(this.textManager);
 
-            foreach (ITextView tv in TextViewRegistry.GetExistingViews()) // Collapse is performed on all open documents in current state of extension.
+            if (tv == null)
+                return;
+
+            var componentModel = this.ServiceProvider.GetService(typeof(SCompon`entModel)) as IComponentModel;
+
+            if (componentModel != null)
             {
-                if (componentModel != null)
-                {
-                    var outliningManagerService = componentModel.GetService<IOutliningManagerService>();
+                var outliningManagerService = componentModel.GetService<IOutliningManagerService>();
 
-                    if (outliningManagerService != null)
-                        OutliningManager = outliningManagerService.GetOutliningManager(tv);
+                if (outliningManagerService != null)
+                    OutliningManager = outliningManagerService.GetOutliningManager(tv);
+            }
+
+            if (OutliningManager != null)
+            {
+                try
+                {
+                    var length = tv.TextSnapshot.Length;
+                    var textViewSpan = new SnapshotSpan(tv.TextSnapshot, 0, length);
+                    var regions = OutliningManager.GetAllRegions(textViewSpan);
+
+                    Dictionary<ICollapsible, int> regionCount = new Dictionary<ICollapsible, int>();
+
+                    foreach (var region in regions)
+                    {
+                        var extent = region.Extent;
+                        var span = extent.GetSpan(tv.TextSnapshot);
+
+                        foreach (var compareTo in regions)
+                        {
+                            if (compareTo.Equals(region))
+                                continue;
+
+                            if (!regionCount.ContainsKey(region))
+                                regionCount[region] = 1;
+
+                            var compareToSpan = compareTo.Extent.GetSpan(tv.TextSnapshot);
+                            var regionSpan = region.Extent.GetSpan(tv.TextSnapshot);
+
+                            if (compareToSpan.Contains(regionSpan))
+                            {
+                                regionCount[region] = regionCount[region] + 1;
+                            }
+                        }
+                    }
+
+                    OutliningManager.ExpandAll(textViewSpan, (y) => (true));
+
+                    foreach (var pair in regionCount)
+                    {
+                        if (pair.Value == level)
+                        {
+                            OutliningManager.TryCollapse(pair.Key);
+                        }
+                    }
                 }
-
-                if (OutliningManager != null)
+                catch (ObjectDisposedException)
                 {
-                    try
-                    {
-                        var length = tv.TextSnapshot.Length;
-                        var textViewSpan = new SnapshotSpan(tv.TextSnapshot, 0, length);
-                        var regions = OutliningManager.GetAllRegions(textViewSpan);
-
-                        Dictionary<ICollapsible, int> regionCount = new Dictionary<ICollapsible, int>();
-
-                        foreach (var region in regions)
-                        {
-                            var extent = region.Extent;
-                            var span = extent.GetSpan(tv.TextSnapshot);
-
-                            foreach (var compareTo in regions)
-                            {
-                                if (compareTo.Equals(region))
-                                    continue;
-
-                                if (!regionCount.ContainsKey(region))
-                                    regionCount[region] = 1;
-
-                                var compareToSpan = compareTo.Extent.GetSpan(tv.TextSnapshot);
-                                var regionSpan = region.Extent.GetSpan(tv.TextSnapshot);
-
-                                if (compareToSpan.Contains(regionSpan))
-                                {
-                                    regionCount[region] = regionCount[region] + 1;
-                                }
-                            }
-                        }
-
-                        OutliningManager.ExpandAll(textViewSpan, (y) => (true));
-
-                        foreach (var pair in regionCount)
-                        {
-                            if (pair.Value == level)
-                            {
-                                OutliningManager.TryCollapse(pair.Key);
-                            }
-                        }
-                    }
-                    catch (ObjectDisposedException)
-                    {
-                        // TODO Investigate, happened once while testing some early version.
-                    }
+                    // TODO Investigate, happened once while testing some early version.
                 }
             }
         }
