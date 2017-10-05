@@ -127,7 +127,7 @@ namespace CollapseLevel
             if (tv == null)
                 return;
 
-            var componentModel = this.ServiceProvider.GetService(typeof(SCompon`entModel)) as IComponentModel;
+            var componentModel = this.ServiceProvider.GetService(typeof(SComponentModel)) as IComponentModel;
 
             if (componentModel != null)
             {
