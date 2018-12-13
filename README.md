@@ -1,6 +1,8 @@
 # 🗞 CollapseLevel
 
-[![AppVeyor](https://ci.appveyor.com/api/projects/status/github/triforcely/collapselevel?branch=master&svg=true)](https://ci.appveyor.com/project/triforcely/collapselevel)
+[![AppVeyor](https://ci.appveyor.com/api/projects/status/github/triforcely/collapselevel?branch=master&svg=true)](https://ci.appveyor.com/project/triforcely/collapselevel) 
+
+Available in [VS Marketplace](https://marketplace.visualstudio.com/items?itemName=mwilski.CollapseLevel)
 
 ### Fold 👏 By 👏 Ident 👏 Levels 👏
 
@@ -9,6 +11,3 @@ Have you ever been laughed at by your *friends* who use _***insert any IDE excep
 
 
 ![Example](https://i.imgur.com/PuFMTMy.gif)
-
-
-Available in [VS Marketplace](https://marketplace.visualstudio.com/items?itemName=mwilski.CollapseLevel)
