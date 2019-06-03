@@ -4,6 +4,9 @@
 
 Available in [VS Marketplace](https://marketplace.visualstudio.com/items?itemName=mwilski.CollapseLevel)
 
+## This project is not actively maintained and I'll be happy to accept your contributions
+
+
 ### Fold 👏 By 👏 Ident 👏 Levels 👏
 
 
