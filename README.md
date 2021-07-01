@@ -5,7 +5,7 @@
 Available in [VS Marketplace](https://marketplace.visualstudio.com/items?itemName=mwilski.CollapseLevel)
 
 
-### Fold 👏 By 👏 Ident 👏 Levels 👏
+### Fold 👏 By 👏 Indent 👏 Levels 👏
 
 
 Have you ever been laughed at by your *friends* who use _***insert any IDE except Visual Studio***_ because your IDE of choice does not allow to fold your code easily? Did you ever feel like throwing your computer away while working with legacy codebases? Well, today is your lucky day!
